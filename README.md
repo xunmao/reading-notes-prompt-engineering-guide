@@ -22,11 +22,8 @@ https://github.com/dair-ai/Prompt-Engineering-Guide
 > Increasing temperature could lead to more randomness, which encourages more diverse or creative outputs. You are essentially increasing the weights of the other possible tokens.
 
 重点在于这一句话的意思不同：
-```text
-EN: You are essentially increasing the weights of the other possible tokens.
-
-ZH: 我们目前也在增加其他可能 token 的权重。
-```
+> You are essentially increasing the weights of the other possible tokens.  
+> 我们目前也在增加其他可能 token 的权重。
 
 我觉得这里应该采用英文版的说法。这句话的意思是，当你调高了`temperature`参数，基本上等于调高了其他可能的 token 的权重。
 
@@ -34,28 +31,24 @@ ZH: 我们目前也在增加其他可能 token 的权重。
 
 在这段描述中，出现了 token 这个概念。以下是关于 token 概念的背景知识（通过 ChatGPT 生成）
 
-```md
-Q: 在研究像ChatGPT这样的大语言模型中，经常会提到token这个词，我想知道这个词代表的概念，你可以给我推荐3篇相关的文章吗？最好是简单易懂的文章，我目前正在学习大语言模型，对于AI没有什么基础。
+> Q: 在研究像ChatGPT这样的大语言模型中，经常会提到token这个词，我想知道这个词代表的概念，你可以给我推荐3篇相关的文章吗？最好是简单易懂的文章，我目前正在学习大语言模型，对于AI没有什么基础。
+>
+> A: 当讨论到像ChatGPT这样的大语言模型时，"token"一词通常指文本数据中最小的可分离单元，例如单词、标点符号或者特殊字符等。以下是三篇简单易懂的文章，可供您了解更多关于token的概念和在大语言模型中的应用：
+> 1. "What are Tokens in Natural Language Processing?" by George Seif. 这篇文章解释了什么是token，以及在自然语言处理中的应用。链接：https://towardsdatascience.com/what-are-tokens-in-natural-language-processing-13e5312cbf56
+> 2. "Tokenization explained" by Rhea Moutafis. 这篇文章介绍了tokenization的概念和过程，并提供了一些实际应用的例子。链接：https://towardsdatascience.com/tokenization-explained-8d0f8441e83e
+> 3. "A Beginner's Guide to Tokenization" by Mariya Yao. 这篇文章介绍了什么是tokenization，以及在自然语言处理中的重要性和应用。链接：https://heartbeat.fritz.ai/a-beginners-guide-to-tokenization-46c4f512d4e5
 
-A: 当讨论到像ChatGPT这样的大语言模型时，"token"一词通常指文本数据中最小的可分离单元，例如单词、标点符号或者特殊字符等。以下是三篇简单易懂的文章，可供您了解更多关于token的概念和在大语言模型中的应用：
-1. "What are Tokens in Natural Language Processing?" by George Seif. 这篇文章解释了什么是token，以及在自然语言处理中的应用。链接：https://towardsdatascience.com/what-are-tokens-in-natural-language-processing-13e5312cbf56
-2. "Tokenization explained" by Rhea Moutafis. 这篇文章介绍了tokenization的概念和过程，并提供了一些实际应用的例子。链接：https://towardsdatascience.com/tokenization-explained-8d0f8441e83e
-3. "A Beginner's Guide to Tokenization" by Mariya Yao. 这篇文章介绍了什么是tokenization，以及在自然语言处理中的重要性和应用。链接：https://heartbeat.fritz.ai/a-beginners-guide-to-tokenization-46c4f512d4e5
-```
-
-```md
-Q: 你可以帮我总结一下这篇文章的要点吗？  
-"What are Tokens in Natural Language Processing?" by George Seif.
-链接：https://towardsdatascience.com/what-are-tokens-in-natural-language-processing-13e5312cbf56
-
-A: 这篇文章解释了自然语言处理中的“tokens”是什么，以及它们在文本数据处理中的作用。要点如下：
-1. Token是文本数据中的最小可分离单元，例如单词、标点符号或者特殊字符等。
-2. Tokenization是将一段文本数据分割为单独的tokens的过程，可以通过空格、标点符号或其他规则来分割。
-3. Tokenization是自然语言处理中的重要步骤，因为它是将自然语言转换为计算机可以处理的离散数据的关键步骤。
-4. Tokenization可以用于处理各种自然语言处理任务，例如文本分类、情感分析、机器翻译等。
-5. Tokenization可能存在一些挑战，例如处理多语言和异体字等问题。
-总的来说，该文章简要介绍了“tokens”的概念和在自然语言处理中的应用，对于初学者来说是一个很好的入门材料。
-```
+> Q: 你可以帮我总结一下这篇文章的要点吗？  
+> "What are Tokens in Natural Language Processing?" by George Seif.
+> 链接：https://towardsdatascience.com/what-are-tokens-in-natural-language-processing-13e5312cbf56
+>
+> A: 这篇文章解释了自然语言处理中的“tokens”是什么，以及它们在文本数据处理中的作用。要点如下：
+> 1. Token是文本数据中的最小可分离单元，例如单词、标点符号或者特殊字符等。
+> 2. Tokenization是将一段文本数据分割为单独的tokens的过程，可以通过空格、标点符号或其他规则来分割。
+> 3. Tokenization是自然语言处理中的重要步骤，因为它是将自然语言转换为计算机可以处理的离散数据的关键步骤。
+> 4. Tokenization可以用于处理各种自然语言处理任务，例如文本分类、情感分析、机器翻译等。
+> 5. Tokenization可能存在一些挑战，例如处理多语言和异体字等问题。
+> 总的来说，该文章简要介绍了“tokens”的概念和在自然语言处理中的应用，对于初学者来说是一个很好的入门材料。
 
 ```md
 Q: 请问大语言模型是如何计算每个token的权重的？

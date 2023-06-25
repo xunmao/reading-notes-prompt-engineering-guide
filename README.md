@@ -74,7 +74,7 @@ TODO
 提示工程（Prompt Engineering）就是探讨如何设计出最佳提示词，用于指导语言模型帮助我们高效完成某项任务。  
 This approach of designing optimal prompts to instruct the model to perform a task is what's referred to as prompt engineering.
 
-零样本提示（zero-shot prompting），即用户不提供任务结果相关的示范，直接提示语言模型给出任务相关的回答。  
+零样本提示（Zero-shot Prompting），即用户不提供任务结果相关的示范，直接提示语言模型给出任务相关的回答。  
 It's referred to as zero-shot prompting, i.e., you are directly prompting the model for a response without any examples or demonstrations about the task you want it to achieve.
 
 小样本提示（Few-shot Prompting），即用户提供少量的提示范例，如任务说明等。  
@@ -97,6 +97,160 @@ It is referred to as few-shot prompting where you provide exemplars (i.e., demon
 1. 做还是不做？
 
 :warning: 在这一章发现中文版中有几个小错误，后续章节应该以英文版为主，辅助阅读中文版加深理解。
+
+### Examples of Prompts / 提示词示例
+
+Text Summarization / 文本概括
+
+_Prompt:_
+```md
+Explain the paper "A Beginner's Guide to Tokenization" by Mariya Yao in 3-5 sentences.
+A:
+```
+
+_Output:_
+```md
+"A Beginner's Guide to Tokenization" by Mariya Yao is a comprehensive introduction to the concept of tokenization in natural language processing. The paper explains how tokenization works, the different approaches to tokenization, and the challenges involved in tokenizing text. It also provides practical examples of tokenization using Python and NLTK, and discusses best practices for tokenization in different scenarios. Overall, the paper is a valuable resource for anyone who wants to understand the basics of tokenization and its applications in NLP.
+```
+
+_Prompt:_
+```md
+Explain how tokenization works according to the paper "A Beginner's Guide to Tokenization" by Mariya Yao in 3-5 sentences.
+A:
+```
+
+_Output:_
+```md
+According to the paper "A Beginner's Guide to Tokenization" by Mariya Yao, tokenization is the process of breaking down text into smaller units called tokens. These tokens can be words, phrases, or even individual characters, depending on the specific application. Tokenization typically involves removing punctuation, converting all text to lowercase, and handling special cases such as contractions and hyphenated words. The resulting tokens can then be used as input for further natural language processing tasks, such as sentiment analysis or machine translation.
+```
+
+_Prompt:_
+```md
+Explain the challenges involved in tokenizing text according to the paper "A Beginner's Guide to Tokenization" by Mariya Yao in 3-5 sentences in Chinese.
+A:
+```
+
+_Output:_
+```md
+根据Mariya Yao的论文《初学者的分词指南》，文本分词面临着许多挑战。其中的挑战包括处理缩写词、连字符、网址和特殊字符等。此外，对于某些语言和文本类型，分词可能会更加复杂，因为它们具有不同的语法结构和规则。因此，在进行文本分词时需要认真考虑这些挑战，以确保分词的准确性和一致性。
+```
+
+Information Extraction / 信息提取
+
+TODO
+
+Question Answering / 问答
+
+_Prompt:_
+```md
+Answer the question based on the paper "A Beginner's Guide to Tokenization" by Mariya Yao. List up the answer in 3-5 points in Chinese.
+Q: What are the different approaches to tokenization?
+A:
+```
+
+_Output:_
+```md
+根据Mariya Yao的论文《初学者的分词指南》，文本分词有以下不同的方法：
+
+1. 基于规则的分词方法，使用预定义的规则来识别单词和短语。
+2. 基于机器学习的分词方法，使用机器学习算法来自动学习文本中的单词和短语。
+3. 混合方法，结合使用规则和机器学习算法来进行分词。
+
+这些方法各有优缺点，具体使用哪种方法取决于文本的性质、应用场景以及分词的准确性需求。
+```
+
+Text Classification / 文本分类
+
+TODO
+
+Conversation / 对话
+
+角色提示（Role Prompting）  
+Note how you are explicitly telling a LLM how to behave through the instruction. This is sometimes referred to as role prompting.
+
+Code Generation / 代码生成
+
+_Prompt:_
+```md
+/*
+Ask the user for their name and say "Hello".
+Provide a form to the user for inputing their name.
+*/
+```
+
+_Output:_
+```md
+Here's an example code snippet in HTML and JavaScript that asks the user for their name and says "Hello" using a form:
+
+[the generated source code ......]
+
+This code defines an HTML form with an input field for the user's name and a submit button. When the user submits the form, a JavaScript function is called that retrieves the user's name from the input field and displays a greeting using an alert dialog box. The form's default submission behavior is prevented using the `event.preventDefault()` method, which allows the JavaScript code to handle the form submission instead.
+```
+
+See the generated source code file [hello-form](./hello-form.html).
+
+_Prompt:_
+```md
+"""
+Create a MySQL query based on the info below.
+
+Info: Table Product
+columns = [product_id, product_name, product_type, smale_mprioce, purchase_price]
+primary key = [product_id]
+
+Format: The product_type should be returned in the following format:
+A: Clothes
+B: Office Supplies
+C: Kitchen Items
+Clothes, Office Supplies and Kitchen Items are valid product_type values.
+The "A: ", "B: " and "C: " are added for formatting the output.
+
+Question: How can I query the product name and the formatted product type?
+
+Answer:
+"""
+```
+
+_Output:_
+```md
+Here's a MySQL query to retrieve the product name and formatted product type as specified:
+
+[the generated source code ......]
+
+This query uses a `CASE` statement to conditionally add the appropriate prefix for each product type, and concatenates it with the product type using the `CONCAT` function. The resulting output will have two columns: `product_name` and `formatted_type`, with each row displaying the product name and its corresponding formatted product type.
+```
+
+这是ChatGPT生成的代码：
+```SQL
+SELECT 
+  product_name,
+  CONCAT(
+    CASE product_type 
+      WHEN 'Clothes' THEN 'A: '
+      WHEN 'Office Supplies' THEN 'B: '
+      WHEN 'Kitchen Items' THEN 'C: '
+    END,
+    product_type
+  ) AS formatted_type 
+FROM 
+  Product;
+```
+
+这是《SQL基础教程（第2版）》中的示例代码：
+```SQL
+SELECT product_name,
+    CASE WHEN product_type = 'Clothes'
+         THEN 'A :' || product_type
+         WHEN product_type = 'Office Supplies'
+         THEN 'B :' || product_type
+         WHEN product_type = 'Kitchen Items'
+         THEN 'C :' || product_type
+         ELSE NULL
+    END AS formatted_type
+  FROM Product;
+```
+
+由于在指令没有给出更加详细的需求，ChatGPT生成的代码中没有考虑到除了`Clothes`、`Office Supplies`和`Kitchen Items`之外的情况。
 
 ## 其他
 

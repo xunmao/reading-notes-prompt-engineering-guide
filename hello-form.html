@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Hello Form</title>
+</head>
+
+<body>
+  <form>
+    <label for="name">What is your name?</label>
+    <input type="text" id="name" name="name">
+    <button type="submit">Submit</button>
+  </form>
+  <script>
+    // Get the form element
+    const form = document.querySelector('form');
+
+    // Attach an event listener to the form's submit event
+    form.addEventListener('submit', (event) => {
+      // Prevent the default form submission behavior
+      event.preventDefault();
+
+      // Get the user's name from the form input
+      const name = form.elements['name'].value;
+
+      // Greet the user
+      alert("Hello, " + name + "!");
+    });
+  </script>
+</body>
+
+</html>

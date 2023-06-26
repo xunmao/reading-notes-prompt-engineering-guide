@@ -9,9 +9,7 @@ https://github.com/dair-ai/Prompt-Engineering-Guide
 * 英文版链接：https://www.promptingguide.ai
 * 中文版链接：https://www.promptingguide.ai/zh
 
-## 各种疑问
-
-这里会总结阅读各个章节时遇到的疑问。
+## Introduction / 提示工程简介
 
 ### LLM Settings / 模型设置
 
@@ -22,8 +20,8 @@ https://github.com/dair-ai/Prompt-Engineering-Guide
 > Increasing temperature could lead to more randomness, which encourages more diverse or creative outputs. You are essentially increasing the weights of the other possible tokens.
 
 重点在于这一句话的意思不同：
-> You are essentially increasing the weights of the other possible tokens.  
-> 我们目前也在增加其他可能 token 的权重。
+> EN: You are essentially increasing the weights of the other possible tokens.  
+> ZH: 我们目前也在增加其他可能 token 的权重。
 
 我觉得这里应该采用英文版的说法。这句话的意思是，当你调高了`temperature`参数，基本上等于调高了其他可能的 token 的权重。
 
@@ -31,18 +29,21 @@ https://github.com/dair-ai/Prompt-Engineering-Guide
 
 在这段描述中，出现了 token 这个概念。以下是关于 token 概念的背景知识（通过 ChatGPT 生成）
 
-> Q: 在研究像ChatGPT这样的大语言模型中，经常会提到token这个词，我想知道这个词代表的概念，你可以给我推荐3篇相关的文章吗？最好是简单易懂的文章，我目前正在学习大语言模型，对于AI没有什么基础。
->
-> A: 当讨论到像ChatGPT这样的大语言模型时，"token"一词通常指文本数据中最小的可分离单元，例如单词、标点符号或者特殊字符等。以下是三篇简单易懂的文章，可供您了解更多关于token的概念和在大语言模型中的应用：
+_Prompt:_
+> 在研究像ChatGPT这样的大语言模型中，经常会提到token这个词，我想知道这个词代表的概念，你可以给我推荐3篇相关的文章吗？最好是简单易懂的文章，我目前正在学习大语言模型，对于AI没有什么基础。
+
+_Output:_
+> 当讨论到像ChatGPT这样的大语言模型时，"token"一词通常指文本数据中最小的可分离单元，例如单词、标点符号或者特殊字符等。以下是三篇简单易懂的文章，可供您了解更多关于token的概念和在大语言模型中的应用：
 > 1. "What are Tokens in Natural Language Processing?" by George Seif. 这篇文章解释了什么是token，以及在自然语言处理中的应用。链接：https://towardsdatascience.com/what-are-tokens-in-natural-language-processing-13e5312cbf56
 > 2. "Tokenization explained" by Rhea Moutafis. 这篇文章介绍了tokenization的概念和过程，并提供了一些实际应用的例子。链接：https://towardsdatascience.com/tokenization-explained-8d0f8441e83e
 > 3. "A Beginner's Guide to Tokenization" by Mariya Yao. 这篇文章介绍了什么是tokenization，以及在自然语言处理中的重要性和应用。链接：https://heartbeat.fritz.ai/a-beginners-guide-to-tokenization-46c4f512d4e5
 
-> Q: 你可以帮我总结一下这篇文章的要点吗？  
-> "What are Tokens in Natural Language Processing?" by George Seif.
-> 链接：https://towardsdatascience.com/what-are-tokens-in-natural-language-processing-13e5312cbf56
->
-> A: 这篇文章解释了自然语言处理中的“tokens”是什么，以及它们在文本数据处理中的作用。要点如下：
+_Prompt:_
+> 你可以帮我总结一下这篇文章的要点吗？  
+> "What are Tokens in Natural Language Processing?" by George Seif. 链接：https://towardsdatascience.com/what-are-tokens-in-natural-language-processing-13e5312cbf56
+
+_Output:_
+> 这篇文章解释了自然语言处理中的“tokens”是什么，以及它们在文本数据处理中的作用。要点如下：
 > 1. Token是文本数据中的最小可分离单元，例如单词、标点符号或者特殊字符等。
 > 2. Tokenization是将一段文本数据分割为单独的tokens的过程，可以通过空格、标点符号或其他规则来分割。
 > 3. Tokenization是自然语言处理中的重要步骤，因为它是将自然语言转换为计算机可以处理的离散数据的关键步骤。
@@ -50,13 +51,13 @@ https://github.com/dair-ai/Prompt-Engineering-Guide
 > 5. Tokenization可能存在一些挑战，例如处理多语言和异体字等问题。
 > 总的来说，该文章简要介绍了“tokens”的概念和在自然语言处理中的应用，对于初学者来说是一个很好的入门材料。
 
-```md
-Q: 请问大语言模型是如何计算每个token的权重的？
+_Prompt:_
+> 请问大语言模型是如何计算每个token的权重的？
 
-A: 大语言模型计算每个token的权重的过程是基于概率模型的。在训练模型时，模型会学习一个概率分布，用于计算给定上下文条件下每个可能的token出现的概率。具体来说，模型会根据文本语料库中的数据，学习一个语言模型，即根据前面出现的词或token预测下一个词或token的概率。这个概率通常使用条件概率来表示，即P(token|context)，其中context是前面的词或token。  
-在测试或生成阶段，模型会根据输入的上下文计算每个可能的token的条件概率，并选择具有最高概率的token作为下一个输出。这个过程通常被称为贪心搜索。此外，大语言模型还可以使用一些改进的搜索算法，例如束搜索（beam search）和采样搜索（sampling），以产生更加多样化和创造性的输出。  
-需要注意的是，对于一些新出现的或者罕见的token，模型可能会出现概率估计不准确的情况，因此在实际应用中，需要对模型进行一些调优和优化，以提高模型的性能和鲁棒性。
-```
+_Output:_
+> 大语言模型计算每个token的权重的过程是基于概率模型的。在训练模型时，模型会学习一个概率分布，用于计算给定上下文条件下每个可能的token出现的概率。具体来说，模型会根据文本语料库中的数据，学习一个语言模型，即根据前面出现的词或token预测下一个词或token的概率。这个概率通常使用条件概率来表示，即P(token|context)，其中context是前面的词或token。  
+> 在测试或生成阶段，模型会根据输入的上下文计算每个可能的token的条件概率，并选择具有最高概率的token作为下一个输出。这个过程通常被称为贪心搜索。此外，大语言模型还可以使用一些改进的搜索算法，例如束搜索（beam search）和采样搜索（sampling），以产生更加多样化和创造性的输出。  
+> 需要注意的是，对于一些新出现的或者罕见的token，模型可能会出现概率估计不准确的情况，因此在实际应用中，需要对模型进行一些调优和优化，以提高模型的性能和鲁棒性。
 
 #### 背景知识 - nucleus sampling
 
@@ -96,37 +97,25 @@ It is referred to as few-shot prompting where you provide exemplars (i.e., demon
 Text Summarization / 文本概括
 
 _Prompt:_
-```md
-Explain the paper "A Beginner's Guide to Tokenization" by Mariya Yao in 3-5 sentences.
-A:
-```
+> Explain the paper "A Beginner's Guide to Tokenization" by Mariya Yao in 3-5 sentences.  
+> A:
 
 _Output:_
-```md
-"A Beginner's Guide to Tokenization" by Mariya Yao is a comprehensive introduction to the concept of tokenization in natural language processing. The paper explains how tokenization works, the different approaches to tokenization, and the challenges involved in tokenizing text. It also provides practical examples of tokenization using Python and NLTK, and discusses best practices for tokenization in different scenarios. Overall, the paper is a valuable resource for anyone who wants to understand the basics of tokenization and its applications in NLP.
-```
+> "A Beginner's Guide to Tokenization" by Mariya Yao is a comprehensive introduction to the concept of tokenization in natural language processing. The paper explains how tokenization works, the different approaches to tokenization, and the challenges involved in tokenizing text. It also provides practical examples of tokenization using Python and NLTK, and discusses best practices for tokenization in different scenarios. Overall, the paper is a valuable resource for anyone who wants to understand the basics of tokenization and its applications in NLP.
 
 _Prompt:_
-```md
-Explain how tokenization works according to the paper "A Beginner's Guide to Tokenization" by Mariya Yao in 3-5 sentences.
-A:
-```
+> Explain how tokenization works according to the paper "A Beginner's Guide to Tokenization" by Mariya Yao in 3-5 sentences.  
+> A:
 
 _Output:_
-```md
-According to the paper "A Beginner's Guide to Tokenization" by Mariya Yao, tokenization is the process of breaking down text into smaller units called tokens. These tokens can be words, phrases, or even individual characters, depending on the specific application. Tokenization typically involves removing punctuation, converting all text to lowercase, and handling special cases such as contractions and hyphenated words. The resulting tokens can then be used as input for further natural language processing tasks, such as sentiment analysis or machine translation.
-```
+> According to the paper "A Beginner's Guide to Tokenization" by Mariya Yao, tokenization is the process of breaking down text into smaller units called tokens. These tokens can be words, phrases, or even individual characters, depending on the specific application. Tokenization typically involves removing punctuation, converting all text to lowercase, and handling special cases such as contractions and hyphenated words. The resulting tokens can then be used as input for further natural language processing tasks, such as sentiment analysis or machine translation.
 
 _Prompt:_
-```md
-Explain the challenges involved in tokenizing text according to the paper "A Beginner's Guide to Tokenization" by Mariya Yao in 3-5 sentences in Chinese.
-A:
-```
+> Explain the challenges involved in tokenizing text according to the paper "A Beginner's Guide to Tokenization" by Mariya Yao in 3-5 sentences in Chinese.  
+> A:
 
 _Output:_
-```md
-根据Mariya Yao的论文《初学者的分词指南》，文本分词面临着许多挑战。其中的挑战包括处理缩写词、连字符、网址和特殊字符等。此外，对于某些语言和文本类型，分词可能会更加复杂，因为它们具有不同的语法结构和规则。因此，在进行文本分词时需要认真考虑这些挑战，以确保分词的准确性和一致性。
-```
+> 根据Mariya Yao的论文《初学者的分词指南》，文本分词面临着许多挑战。其中的挑战包括处理缩写词、连字符、网址和特殊字符等。此外，对于某些语言和文本类型，分词可能会更加复杂，因为它们具有不同的语法结构和规则。因此，在进行文本分词时需要认真考虑这些挑战，以确保分词的准确性和一致性。
 
 Information Extraction / 信息提取
 
@@ -135,22 +124,18 @@ TODO
 Question Answering / 问答
 
 _Prompt:_
-```md
-Answer the question based on the paper "A Beginner's Guide to Tokenization" by Mariya Yao. List up the answer in 3-5 points in Chinese.
-Q: What are the different approaches to tokenization?
-A:
-```
+> Answer the question based on the paper "A Beginner's Guide to Tokenization" by Mariya Yao. List up the answer in 3-5 points in Chinese.  
+> Q: What are the different approaches to tokenization?  
+> A:
 
 _Output:_
-```md
-根据Mariya Yao的论文《初学者的分词指南》，文本分词有以下不同的方法：
-
-1. 基于规则的分词方法，使用预定义的规则来识别单词和短语。
-2. 基于机器学习的分词方法，使用机器学习算法来自动学习文本中的单词和短语。
-3. 混合方法，结合使用规则和机器学习算法来进行分词。
-
-这些方法各有优缺点，具体使用哪种方法取决于文本的性质、应用场景以及分词的准确性需求。
-```
+> 根据Mariya Yao的论文《初学者的分词指南》，文本分词有以下不同的方法：
+> 
+> 1. 基于规则的分词方法，使用预定义的规则来识别单词和短语。
+> 2. 基于机器学习的分词方法，使用机器学习算法来自动学习文本中的单词和短语。
+> 3. 混合方法，结合使用规则和机器学习算法来进行分词。
+> 
+> 这些方法各有优缺点，具体使用哪种方法取决于文本的性质、应用场景以及分词的准确性需求。
 
 Text Classification / 文本分类
 
@@ -164,54 +149,46 @@ Note how you are explicitly telling a LLM how to behave through the instruction.
 Code Generation / 代码生成
 
 _Prompt:_
-```md
-/*
-Ask the user for their name and say "Hello".
-Provide a form to the user for inputing their name.
-*/
-```
+> /*  
+> Ask the user for their name and say "Hello".  
+> Provide a form to the user for inputing their name.  
+> */
 
 _Output:_
-```md
-Here's an example code snippet in HTML and JavaScript that asks the user for their name and says "Hello" using a form:
-
-[the generated source code ......]
-
-This code defines an HTML form with an input field for the user's name and a submit button. When the user submits the form, a JavaScript function is called that retrieves the user's name from the input field and displays a greeting using an alert dialog box. The form's default submission behavior is prevented using the `event.preventDefault()` method, which allows the JavaScript code to handle the form submission instead.
-```
+> Here's an example code snippet in HTML and JavaScript that asks the user for their name and says "Hello" using a form:
+> 
+> [the generated source code ......]
+> 
+> This code defines an HTML form with an input field for the user's name and a submit button. When the user submits the form, a JavaScript function is called that retrieves the user's name from the input field and displays a greeting using an alert dialog box. The form's default submission behavior is prevented using the `event.preventDefault()` method, which allows the JavaScript code to handle the form submission instead.
 
 See the generated source code file [hello-form](./hello-form.html).
 
 _Prompt:_
-```md
-"""
-Create a MySQL query based on the info below.
-
-Info: Table Product
-columns = [product_id, product_name, product_type, smale_mprioce, purchase_price]
-primary key = [product_id]
-
-Format: The product_type should be returned in the following format:
-A: Clothes
-B: Office Supplies
-C: Kitchen Items
-Clothes, Office Supplies and Kitchen Items are valid product_type values.
-The "A: ", "B: " and "C: " are added for formatting the output.
-
-Question: How can I query the product name and the formatted product type?
-
-Answer:
-"""
-```
+> """  
+> Create a MySQL query based on the info below.
+> 
+> Info: Table Product
+> columns = [product_id, product_name, product_type, smale_mprioce, purchase_price]
+> primary key = [product_id]
+> 
+> Format: The product_type should be returned in the following format:
+> A: Clothes
+> B: Office Supplies
+> C: Kitchen Items
+> Clothes, Office Supplies and Kitchen Items are valid product_type values.
+> The "A: ", "B: " and "C: " are added for formatting the output.
+> 
+> Question: How can I query the product name and the formatted product type?
+> 
+> Answer:  
+> """
 
 _Output:_
-```md
-Here's a MySQL query to retrieve the product name and formatted product type as specified:
-
-[the generated source code ......]
-
-This query uses a `CASE` statement to conditionally add the appropriate prefix for each product type, and concatenates it with the product type using the `CONCAT` function. The resulting output will have two columns: `product_name` and `formatted_type`, with each row displaying the product name and its corresponding formatted product type.
-```
+> Here's a MySQL query to retrieve the product name and formatted product type as specified:
+> 
+> [the generated source code ......]
+> 
+> This query uses a `CASE` statement to conditionally add the appropriate prefix for each product type, and concatenates it with the product type using the `CONCAT` function. The resulting output will have two columns: `product_name` and `formatted_type`, with each row displaying the product name and its corresponding formatted product type.
 
 这是ChatGPT生成的代码：
 ```SQL
@@ -244,6 +221,22 @@ SELECT product_name,
 ```
 
 由于在指令没有给出更加详细的需求，ChatGPT生成的代码中没有考虑到除了`Clothes`、`Office Supplies`和`Kitchen Items`之外的情况。
+
+Reasoning / 推理
+
+TODO
+
+## Prompting Techniques / 提示技术
+
+### Zero-Shot Prompting / 零样本提示
+
+Instruction tuning is essentially the concept of finetuning models on datasets described via instructions.  
+指令调整本质上是在通过指令描述的数据集上微调模型的概念。
+
+1. "FINETUNED LANGUAGE MODELS ARE ZERO-SHOT LEARNERS" by Jason Wei et al.
+1. "Deep reinforcement learning from human preferences" by Paul Christiano et al.
+
+### Few-Shot Prompting / 小样本提示
 
 ## 其他
 

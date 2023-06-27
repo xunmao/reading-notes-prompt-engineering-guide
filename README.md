@@ -5,7 +5,7 @@
 《Prompt Engineering Guide》的GitHub仓库：  
 https://github.com/dair-ai/Prompt-Engineering-Guide
 
-我写读书笔记时主要看一下两个网页的内容，互相对比，加深理解。
+我写读书笔记时主要看以下两个网页的内容，互相对比，加深理解。
 * 英文版链接：https://www.promptingguide.ai
 * 中文版链接：https://www.promptingguide.ai/zh
 
@@ -237,6 +237,44 @@ Instruction tuning is essentially the concept of finetuning models on datasets d
 1. "Deep reinforcement learning from human preferences" by Paul Christiano et al.
 
 ### Few-Shot Prompting / 小样本提示
+
+这句话不太理解
+> EN: The demonstrations serve as conditioning for subsequent examples where we would like the model to generate a response.  
+> ZH: 演示作为后续示例的条件，我们希望模型生成响应。
+
+这篇论文中提到的3点建议不太理解
+> "Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?" by Sewon Min.
+> 
+> Tips:
+> * "the label space and the distribution of the input text specified by the demonstrations are both important (regardless of whether the labels are correct for individual inputs)"
+> * the format you use also plays a key role in performance, even if you just use random labels, this is much better than no labels at all.
+> * additional results show that selecting random labels from a true distribution of labels (instead of a uniform distribution) also helps.
+
+文中接下来给出的示例，好像是针对第2条建议的，但是不太肯定
+
+### Chain-of-Thought Prompting / 链式思考提示
+
+链式思考（CoT）提示通过中间推理步骤实现了复杂的推理能力。最初，链式思考是与小样本提示结合使用的？  
+之后，发展出了零样本链式思考，依靠`Let's think step by step.`这个提示来实现。  
+英文版中最后提到的“Automatic Chain-of-Thought (Auto-CoT)”目前还没有翻译。我的理解是，通过Zero-Shot-CoT的方式，让大语言模型生成推理链，然后用这些推理链作为示例，用于小样本链式思考。可能在某些任务上，零样本链式思考还不够好，需要小样本链式思考来帮助？
+
+Automatic Chain-of-Thought (Auto-CoT)
+> When applying chain-of-thought prompting with demonstrations, the process involves hand-crafting effective and diverse examples. This manual effort could lead to suboptimal solutions. Zhang et al. (2022)(opens in a new tab) propose an approach to eliminate manual efforts by leveraging LLMs with "Let's think step by step" prompt to generate reasoning chains for demonstrations one by one. This automatic process can still end up with mistakes in generated chains. To mitigate the effects of the mistakes, the diversity of demonstrations matter. This works proposes Auto-CoT, which samples questions with diversity and generates reasoning chains to construct the demonstrations.
+> 
+> Auto-CoT consists of two main stages:
+> 
+> Stage 1): question clustering: partition questions of a given dataset into a few clusters  
+> Stage 2): demonstration sampling: select a representative question from each cluster and generate its reasoning chain using Zero-Shot-CoT with simple heuristics  
+> The simple heuristics could be length of questions (e.g., 60 tokens) and number of steps in rationale (e.g., 5 reasoning steps). This encourages the model to use simple and accurate demonstrations.
+
+自动链式思考（ChatGPT翻译）
+> 当使用"链式思考提示"结合演示时，过程涉及手工制作有效且多样化的例子。这种手动努力可能会导致次优解。张等人(2022)提出了一种方法，通过利用带有"一步一步思考"提示的LLMs来自动生成演示的推理链，消除手动努力。这个自动过程仍然可能会出现生成链的错误。为了减轻错误的影响，演示的多样性很重要。这项工作提出了Auto-CoT，它通过多样性抽样问题并生成推理链来构建演示。
+> 
+> Auto-CoT包括两个主要阶段：
+> 
+> 阶段1）问题聚类：将给定数据集的问题划分为几个聚类  
+> 阶段2）演示抽样：从每个聚类中选择一个代表性问题，并使用简单的启发式方法使用Zero-Shot-CoT生成其推理链  
+> 这些简单的启发式方法可以是问题长度（例如，60个标记）和理性步骤的数量（例如5个推理步骤）。这鼓励模型使用简单而准确的演示。
 
 ## 其他
 

@@ -276,6 +276,17 @@ Automatic Chain-of-Thought (Auto-CoT)
 > 阶段2）演示抽样：从每个聚类中选择一个代表性问题，并使用简单的启发式方法使用Zero-Shot-CoT生成其推理链  
 > 这些简单的启发式方法可以是问题长度（例如，60个标记）和理性步骤的数量（例如5个推理步骤）。这鼓励模型使用简单而准确的演示。
 
+### Self-Consistency / 自我一致性
+
+> The idea is to sample multiple, diverse reasoning paths through few-shot CoT, and use the generations to select the most consistent answer. This helps to boost the performance of CoT prompting on tasks involving arithmetic and commonsense reasoning.  
+> 该想法是通过小样本CoT采样多个不同的推理路径，并使用生成结果选择最一致的答案。这有助于提高CoT提示在涉及算术和常识推理的任务中的性能。
+
+对于本章节的示例我还不太懂，针对一个提示，有3次不同的输出，其中两次输出正确，一次输出错误。  
+这里为什么会有3次输出？反复输出n次的目的是什么？  
+为什么输出结果会出现偏差？  
+以及下面这句话想表达什么意思？是不是说，模型会在3次输出中找到两次正确的答案（或者说一致的答案），然后生成最终答案？  
+> Computing for the final answer involves a few steps (check out the paper for the details) but for the sake of simplicity, we can see that there is already a majority answer emerging so that would essentially become the final answer.
+
 ## 其他
 
 1. https://github.com/f/awesome-chatgpt-prompts

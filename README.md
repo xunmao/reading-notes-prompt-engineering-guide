@@ -287,6 +287,24 @@ Automatic Chain-of-Thought (Auto-CoT)
 以及下面这句话想表达什么意思？是不是说，模型会在3次输出中找到两次正确的答案（或者说一致的答案），然后生成最终答案？  
 > Computing for the final answer involves a few steps (check out the paper for the details) but for the sake of simplicity, we can see that there is already a majority answer emerging so that would essentially become the final answer.
 
+### Generated Knowledge Prompting / 生成知识提示
+
+这种提示的目的，主要是帮助提升常识推理类任务的表现。
+1. 通过小样本提示生成相关知识
+1. 将生成的知识与问题结合，进行提问
+
+### Tree of Thoughts (ToT) / 思维树（ToT）
+
+> For complex tasks that require exploration or strategic lookahead, traditional or simple prompting techniques fall short. Yao et el. (2023)(opens in a new tab) and Long (2023)(opens in a new tab) recently proposed Tree of Thoughts (ToT), a framework that generalizes over chain-of-thought prompting and encourages exploration over thoughts that serve as intermediate steps for general problem solving with language models.
+
+思维树可以被总结为一段提示，如下：
+> Imagine three different experts are answering this question.  
+> All experts will write down 1 step of their thinking,  
+> then share it with the group.  
+> Then all experts will go on to the next step, etc.  
+> If any expert realises they're wrong at any point then they leave.  
+> The question is...
+
 ## 其他
 
 1. https://github.com/f/awesome-chatgpt-prompts

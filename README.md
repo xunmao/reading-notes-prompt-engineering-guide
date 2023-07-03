@@ -1,5 +1,12 @@
 # 《Prompt Engineering Guide》读书笔记
 
+## 之后的计划
+
+1. ChatGPT 学习导航：https://learningprompt.wiki/docs/chatgpt-learning-path
+1. Open AI Prompt engineering：https://help.openai.com/en/collections/3675942-prompt-engineering
+    1. Best practices for prompt engineering with OpenAI API：https://help.openai.com/en/articles/6654000-best-practices-for-prompt-engineering-with-openai-api
+1. 了解 https://huggingface.co/
+
 ## 基本信息
 
 《Prompt Engineering Guide》的GitHub仓库：  
@@ -278,8 +285,14 @@ Automatic Chain-of-Thought (Auto-CoT)
 
 ### Self-Consistency / 自我一致性
 
+_Why_
 > The idea is to sample multiple, diverse reasoning paths through few-shot CoT, and use the generations to select the most consistent answer. This helps to boost the performance of CoT prompting on tasks involving arithmetic and commonsense reasoning.  
 > 该想法是通过小样本CoT采样多个不同的推理路径，并使用生成结果选择最一致的答案。这有助于提高CoT提示在涉及算术和常识推理的任务中的性能。
+
+_How_
+> TODO
+
+_Question_
 
 对于本章节的示例我还不太懂，针对一个提示，有3次不同的输出，其中两次输出正确，一次输出错误。  
 这里为什么会有3次输出？反复输出n次的目的是什么？  
@@ -289,21 +302,59 @@ Automatic Chain-of-Thought (Auto-CoT)
 
 ### Generated Knowledge Prompting / 生成知识提示
 
-这种提示的目的，主要是帮助提升常识推理类任务的表现。
-1. 通过小样本提示生成相关知识
-1. 将生成的知识与问题结合，进行提问
+_Why_
+> 通过融合知识或信息，可以帮助大语言模型做出更准确的预测，特别是帮助提升常识推理类任务的表现。基于这种思路，可以先用模型生成知识，然后再做出预测。
+
+_How_
+> 1. 通过小样本提示生成相关知识
+> 1. 将生成的知识与问题结合，进行提问
 
 ### Tree of Thoughts (ToT) / 思维树（ToT）
 
+_Why_
 > For complex tasks that require exploration or strategic lookahead, traditional or simple prompting techniques fall short. Yao et el. (2023)(opens in a new tab) and Long (2023)(opens in a new tab) recently proposed Tree of Thoughts (ToT), a framework that generalizes over chain-of-thought prompting and encourages exploration over thoughts that serve as intermediate steps for general problem solving with language models.
+> 
+> 对于需要探索或预判战略的复杂任务来说，传统或简单的提示技巧是不够的。最近，Yao et el. (2023)(opens in a new tab) 提出了思维树（Tree of Thoughts，ToT）框架，该框架基于思维链提示进行了总结，引导语言模型探索把思维作为中间步骤来解决通用问题。
 
-思维树可以被总结为一段提示，如下：
+_How_
+> 思维树可以被总结为一段提示，如下：
+> 
 > Imagine three different experts are answering this question.  
 > All experts will write down 1 step of their thinking,  
 > then share it with the group.  
 > Then all experts will go on to the next step, etc.  
 > If any expert realises they're wrong at any point then they leave.  
 > The question is...
+
+### Retrieval Augmented Generation (RAG) / 检索增强生成（RAG）
+
+_Why_
+> For more complex and knowledge-intensive tasks, it's possible to build a language model-based system that accesses external knowledge sources to complete tasks. This enables more factual consistency, improves reliability of the generated responses, and helps to mitigate the problem of "hallucination".
+> 
+> 要完成更复杂和知识密集型的任务，可以基于语言模型构建一个系统，访问外部知识源来做到。这样的实现与事实更加一性，生成的答案更可靠，还有助于缓解“幻觉”问题。
+
+_How_
+> RAG takes an input and retrieves a set of relevant/supporting documents given a source (e.g., Wikipedia). The documents are concatenated as context with the original input prompt and fed to the text generator which produces the final output. This makes RAG adaptive for situations where facts could evolve over time. This is very useful as LLMs's parametric knowledge is static. RAG allows language models to bypass retraining, enabling access to the latest information for generating reliable outputs via retrieval-based generation.
+> 
+> RAG 会接受输入并检索出一组相关/支撑的文档，并给出文档的来源（例如维基百科）。这些文档作为上下文和输入的原始提示词组合，送给文本生成器得到最终的输出。这样 RAG 更加适应事实会随时间变化的情况。这非常有用，因为 LLM 的参数化知识是静态的。RAG 让语言模型不用重新训练就能够获取最新的信息，基于检索生成产生可靠的输出。
+
+### Automatic Reasoning and Tool-use (ART) / 自动推理并使用工具（ART）
+
+_Why_
+> Combining CoT prompting and tools in an interleaved manner has shown to be a strong and robust approach to address many tasks with LLMs. These approaches typically require hand-crafting task-specific demonstrations and carefully scripted interleaving of model generations with tool use. Paranjape et al., (2023)(opens in a new tab) propose a new framework that uses a frozen LLM to automatically generate intermediate reasoning steps as a program.
+> 
+> 使用 LLM 完成任务时，交替运用 CoT 提示和工具已经被证明是一种即强大又稳健的方法。这类方法通常需要针对特定任务手写示范，还需要精心编写交替使用生成模型和工具的脚本。Paranjape et al., (2023)(opens in a new tab)提出了一个新框架，该框架使用冻结的 LLM 来自动生成包含中间推理步骤的程序。
+
+_How_
+> ART works as follows:
+> 
+> * given a new task, it select demonstrations of multi-step reasoning and tool use from a task library
+> * at test time, it pauses generation whenever external tools are called, and integrate their output before resuming generation
+> 
+> ART的工作原理如下：
+> 
+> * 接到一个新任务的时候，从任务库中选择多步推理和使用工具的示范。
+> * 在测试中，调用外部工具时，先暂停生成，将工具输出整合后继续接着生成。
 
 ## 其他
 

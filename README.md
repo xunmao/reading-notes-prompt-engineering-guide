@@ -2,10 +2,11 @@
 
 ## 之后的计划
 
-1. ChatGPT 学习导航：https://learningprompt.wiki/docs/chatgpt-learning-path
-1. Open AI Prompt engineering：https://help.openai.com/en/collections/3675942-prompt-engineering
-    1. Best practices for prompt engineering with OpenAI API：https://help.openai.com/en/articles/6654000-best-practices-for-prompt-engineering-with-openai-api
-1. 了解 https://huggingface.co/
+1. 学习 [ChatGPT 学习导航](https://learningprompt.wiki/docs/chatgpt-learning-path)
+1. 了解 [Open AI Prompt engineering](https://help.openai.com/en/collections/3675942-prompt-engineering)
+    1. 学习 [Best practices for prompt engineering with OpenAI API](https://help.openai.com/en/articles/6654000-best-practices-for-prompt-engineering-with-openai-api)
+1. 了解 [Hugging Face - The AI community building the future.](https://huggingface.co/)
+1. 学习 [LangChain 框架](https://github.com/hwchase17/langchain)
 
 ## 基本信息
 
@@ -355,6 +356,74 @@ _How_
 > 
 > * 接到一个新任务的时候，从任务库中选择多步推理和使用工具的示范。
 > * 在测试中，调用外部工具时，先暂停生成，将工具输出整合后继续接着生成。
+
+### 自动提示工程师（APE）
+
+_Why_
+> By conditioning on natural language instructions, large language models (LLMs) have displayed impressive capabilities as general-purpose computers. However, task performance depends significantly on the quality of the prompt used to steer the model, and most effective prompts have been handcrafted by humans. Inspired by classical program synthesis and the human approach to prompt engineering, we propose Automatic Prompt Engineer (APE) for automatic instruction generation and selection.
+> 
+> 通过自然语言指令的条件训练，大型语言模型(LLMs)展示了作为通用计算机的惊人能力。然而，任务性能在很大程度上取决于用于引导模型的提示的质量，而大多数有效的提示都是由人类手工制作的。受经典程序合成和人类提示工程方法的启发，我们提出了自动提示工程师(APE)，用于自动指令生成和选择。
+
+_How_
+> TODO
+
+_Note_
+
+本文涉及与提示工程相关的重要主题，即自动优化提示的想法。
+
+_论文链接_
+
+https://sites.google.com/view/automatic-prompt-engineer
+
+### Active-Prompt
+
+_Why_
+> 思维链（CoT）方法依赖于一组固定的人工注释范例。问题在于，这些范例可能不是不同任务的最有效示例。
+
+我对于 Active-Prompt 方法的理解是，这个方法优化了 CoT 中人工编写示例的工作，通过设计一些指标，以便找到最值得编写的示例。  
+以下是来自原论文中的一段话（的中文翻译）：
+> 由于推理任务在困难程度、范围、领域等方面存在显着差异，我们不知道哪种问题最值得注释。也不清楚特定一组示例是否最适合引出所需信息。然而，好消息是为不同任务注释八个示例很容易。这几乎不需要花费太多的时间和人力。考虑到这一点，我们确定了关键问题，即如何确定哪些问题对注释最重要和有帮助。我们提出了一个解决方案，通过利用不确定性和引入少量人力来注释一小组问题。注释预算是合理的。
+
+_How_
+> 第一步、使用小样本提示CoT、或零样本提示CoT查询LLM。对一组训练问题生成k个可能的答案  
+> 第二步、基于k个答案计算不确定度度量（使用不一致性）（该论文的关键：如何找到最关键的示例）  
+> 第三步、选择最不确定的问题由人类进行注释  
+> 第四步、使用新的注释范例来推断每个问题（验证效果）
+
+### 方向性刺激提示
+
+_Why_
+> We introduce a novel prompting framework called Directional Stimulus Prompting
+> for guiding black-box large language models (LLMs) toward desired outputs. The
+> framework introduces a new component called directional stimulus into the prompt,
+> providing more fine-grained guidance and control over LLMs. The directional
+> stimulus serves as hints or cues for each input query to guide LLMs toward the
+> desired output, such as keywords that the desired summary should include for summarization. We utilize a small tunable model (e.g., T5) to generate such directional
+> stimulus for each query, allowing us to optimize black-box LLMs by optimizing
+> a small policy model. This policy model can be trained through 1) supervised
+> fine-tuning using labeled data and 2) reinforcement learning from offline or online rewards to explore directional stimulus that better aligns LLMs with desired
+> behaviors. We evaluate our framework on summarization and dialogue response
+> generation tasks. Experimental results show that our framework consistently improves ChatGPT’s performance over standard prompting with a small collection
+> of training data, and reinforcement learning further improves the performance.
+> Notably, on the MultWOZ dataset, our framework enables ChatGPT to achieve
+> a remarkable 41.4% improvement in its combined score with only 80 dialogues,
+> matching or even surpassing the performance of some fully trained state-of-the-art models.
+
+_How_
+> TODO
+
+### ReAct 框架
+
+[ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629)
+
+融合语言模型中的推理与行动，通过生成推理轨迹，诱导、跟踪和更新操作计划，甚至处理异常情况。  
+ReAct 框架允许 LLMs 与外部工具交互来获取额外信息，从而给出更可靠和实际的回应。
+
+_Why_
+> While large language models (LLMs) have demonstrated impressive capabilities across tasks in language understanding and interactive decision making, their abilities for reasoning (e.g. chain-of-thought prompting) and acting (e.g. action plan generation) have primarily been studied as separate topics. In this paper, we explore the use of LLMs to generate both reasoning traces and task-specific actions in an interleaved manner, allowing for greater synergy between the two: reasoning traces help the model induce, track, and update action plans as well as handle exceptions, while actions allow it to interface with external sources, such as knowledge bases or environments, to gather additional information. We apply our approach, named ReAct, to a diverse set of language and decision making tasks and demonstrate its effectiveness over state-of-the-art baselines, as well as improved human interpretability and trustworthiness over methods without reasoning or acting components. Concretely, on question answering (HotpotQA) and fact verification (Fever), ReAct overcomes issues of hallucination and error propagation prevalent in chain-of-thought reasoning by interacting with a simple Wikipedia API, and generates human-like task-solving trajectories that are more interpretable than baselines without reasoning traces. On two interactive decision making benchmarks (ALFWorld and WebShop), ReAct outperforms imitation and reinforcement learning methods by an absolute success rate of 34% and 10% respectively, while being prompted with only one or two in-context examples.
+
+_How_
+> TODO
 
 ## 其他
 
